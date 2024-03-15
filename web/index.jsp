@@ -34,9 +34,8 @@
     <h3>금액 입력</h3>
     <input type="number" id="amount" placeholder="금액 입력" />
     <button onclick="saveAmount()">저장</button>
-    <h3>1일 금액</h3>
-    <h3>2일 누적 금액</h3>
-    <h3>3일 저금 금액</h3>
+    <h3>1일 금액 : <h3 id="dailyAmount"></h3></h3>
+    <h3>일주일 누적 금액</h3>
     <h3>총 누적 금액</h3>
 </div>
 

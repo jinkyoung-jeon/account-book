@@ -44,12 +44,42 @@ function generateCalendar(month, year) {
 
 // 금액 저장 함수
 function saveAmount() {
-    let value = document.getElementById('amount').value;
-    const amount = value;
+    let amount = document.getElementById('amount').value;
     console.log('입력된 금액:', amount); // 실제 애플리케이션에서는 여기서 입력된 금액을 처리
+    console.log('diffDays', diffDays);
+
+    this.setDailyAmount(amount);
+
 
     // 입력창 숨기기
-    document.getElementById('amount-entry').style.display = 'none';
+    // document.getElementById('amount-entry').style.display = 'none';
+}
+
+// 일주일 누적금액 계산
+function setWeeklyAmount() {
+    // 월요일 기준, 시작: 월요일 ~ 종료: 일요일
+
+}
+
+// 1일 금액 계산
+function setDailyAmount(amount) {
+    let dailyAmount = amount / diffDays;
+    console.log('dailyAmount', dailyAmount);
+
+    $.ajax({
+        url: 'index.jsp', // 데이터를 처리할 JSP 페이지의 URL
+        type: 'POST', // 데이터를 POST 방식으로 전송
+        data: {
+            value: dailyAmount // 서버로 전송할 데이터
+        },
+        success: function() {
+            $('#dailyAmount').text(dailyAmount);
+        },
+        error: function(xhr, status, error) {
+            // 오류 처리
+            console.error("Error: " + error);
+        }
+    });
 }
 
 // 한달 날짜 선택
@@ -87,6 +117,7 @@ document.addEventListener('DOMContentLoaded', function() {
     setDateMonth();
 });
 
+let diffDays = null;
 function calcDate() {
     let startDateValue = document.getElementById('startDate').value;
     let endDateValue = document.getElementById('endDate').value;
@@ -97,7 +128,7 @@ function calcDate() {
     let diffTime = endDate - startDate;
 
     // 밀리초 단위의 차이를 일수로 변환합니다. (1일 = 24시간 * 60분 * 60초 * 1000밀리초)
-    let diffDays = diffTime / (1000 * 60 * 60 * 24);
+    diffDays = diffTime / (1000 * 60 * 60 * 24);
 
     console.log(diffDays); // 일수 차이를 콘솔에 출력합니다.
 
